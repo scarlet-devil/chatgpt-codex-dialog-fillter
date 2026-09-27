@@ -26,4 +26,6 @@ Project names, assistant nicknames, model names, and local folder paths are not 
 - [Project memory](PROJECT_MEMORY.md) and [work log](WORK_LOG.md)
 - [Contributor instructions](AGENTS.md)
 
-Local static inspection of app package `26.924.2738.0` has been reported. The next step is to review its original evidence and revise the ownership criterion before building a prototype. The original reports have not yet been supplied to this repository; UI behavior, search coverage, and rollback remain unverified. This repository does not currently offer an installation command.
+Local static inspection of app package `26.924.2738.0` has been reported. Alice has now read both original reports through the private evidence channel and reviewed their reasoning. Conversation and project filtering require separate rules; the native grouping still does not establish product ownership. The next step is to validate the ownership contract on controlled cases before a prototype. The complete anchor manifest and raw probe output remain pending independent review; UI behavior, search coverage, and rollback remain unverified.
+
+Machine-specific reports stay in the maintainer's private Drive channel. This public repository contains sanitized conclusions and specifications, without private report links or raw local evidence. No installation command is available yet.

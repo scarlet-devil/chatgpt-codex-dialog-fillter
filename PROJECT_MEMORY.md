@@ -4,7 +4,7 @@
 
 In the unified desktop app, Codex projects and conversations must not appear in the ChatGPT interface. The Codex interface already behaves as desired for the reported use case.
 
-The earlier idea of fully separating both histories has been narrowed to one-way interface visibility. The initial target is Windows. A local static inspection of app package `26.924.2738.0` was reported on 2026-09-27; the original evidence is not yet available for cloud review.
+The earlier idea of fully separating both histories has been narrowed to one-way interface visibility. The initial target is Windows. A local static inspection of app package `26.924.2738.0` was reported on 2026-09-27. Alice has read the two original reports privately; full anchor/probe reproduction and runtime verification remain pending.
 
 ## Decisions — 2026-09-27
 
@@ -15,10 +15,13 @@ The earlier idea of fully separating both histories has been narrowed to one-way
 - Prefer a reversible, narrowly scoped interface change. Choose the implementation mechanism only after local feasibility review.
 - The reported native `All / Chat / Work` classification maps `tpp` Work conversations into an internal `codex` category. Selecting `Chat`, or hiding every record with that category, is therefore not an acceptable ownership rule for the reported case.
 - Revise the ownership criterion before a prototype. Preserve the reported legitimate `tpp` Work case, but do not generalize this into an unverified rule that all `tpp` records must always be retained.
+- Preserve all content confirmed to belong to ChatGPT Work regardless of native grouping. Mixed projects require child-level decisions; conversation filtering does not establish project or search coverage.
+- Absence of a ChatGPT association is not positive Codex provenance. An incomplete page cannot prove that an entire project is Codex-only.
+- Keep machine-specific reports and evidence in the maintainer's private Drive channel. Public documentation contains necessary sanitized conclusions and progress only, with no private report links or raw local evidence.
 
 ## Open questions
 
-1. How do the reported top-level `work/codex` values map to the visible views on the inspected build? Review the original anchors before making them a feature gate.
+1. How do top-level mode and sidebar surface state propagate across visible views and transitions? Their different naming schemes are described in the report, but runtime agreement is unverified.
 2. Which combination of provenance and project associations distinguishes unwanted Codex content from wanted ChatGPT Work content, including the reported `tpp` case and mixed project containers?
 3. Can every relevant list and search surface be filtered before it becomes visible?
 4. Does the installed build support a reversible injection or copied-app workflow without weakening security controls?
