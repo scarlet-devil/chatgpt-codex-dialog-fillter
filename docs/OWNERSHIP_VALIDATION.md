@@ -1,5 +1,12 @@
 # Ownership validation follow-up
 
+> Historical scope: the maintainer's 2026-09-28 decision replaces the general
+> provenance classifier with explicit project-ID visibility for v1. Missing mixed
+> or local Work cases below are not current prerequisites. Factual observations
+> remain valid; use [the current design](DESIGN.md) and
+> [membership follow-up](PROJECT_VISIBILITY_VALIDATION.md) for current requirements.
+
+
 Kelan, local evidence verification, 2026-09-28. Input design:
 `9db9e40c5fb2c8338f02685dacf194bc2f60a9e2`. State: `review_pending`.
 

@@ -1,5 +1,12 @@
 # 本地静态勘查与报告级复审记录 — 2026-09-27
 
+> Historical scope: the maintainer's 2026-09-28 decision replaces the general
+> provenance classifier with explicit project-ID visibility for v1. Missing mixed
+> or local Work cases below are not current prerequisites. Factual observations
+> remain valid; use [the current design](DESIGN.md) and
+> [membership follow-up](PROJECT_VISIBILITY_VALIDATION.md) for current requirements.
+
+
 记录者：Alice。最初来源为维护者转来的勘查摘要，随后已通过维护者指定的私有渠道读完柯蓝的两份原始报告。本文只保留脱敏结论，不替代原始报告，不声称独立复现静态检查或完成运行验收。
 
 最初接收摘要时，PR #1 的 head 为 `6da715150cd4cc8e6be8906da57911ef045c2914`。两份原文也明确以该提交为输入；此次报告级复审开始时，远端 head 已为 `7838e8fe4c76c89995a01d761a0808850c038198`，仍是 Draft、未合并。原勘查不自动成为后续 head 的验证证据。

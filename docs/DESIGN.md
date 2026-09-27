@@ -1,97 +1,122 @@
-# One-way display filter
+# One-way project visibility — v1
 
-## Contract
+## Maintainer decision, 2026-09-28
 
-When the active product view is ChatGPT, omit records confirmed to belong to Codex from project and conversation lists. When the active view is Codex, preserve the original rendering behavior. Do not mutate the records or their persisted visibility, archive, membership, or deletion state.
+V1 uses a maintainer-specified project list, keyed by unique project identity.
+Conversations inherit the rule of their **current** project. Creation mode, native
+category, model and original project do not decide visibility.
 
-The words "active view" and "ownership" below describe product concepts, not independently verified API fields. Alice has reviewed the original local inspection reports privately. Complete static reproduction and runtime verification remain outstanding; this public design does not expose machine-specific evidence or claim an implemented schema.
+This supersedes the earlier general product-provenance classifier. The maintainer
+reports no mixed projects in the present use case. Mixed projects are unsupported
+in v1; missing mixed-project or local Work examples no longer block this scope.
+No application filter or installer exists yet.
 
-## Classification
-
-Both of these signals are required:
-
-1. A reliable indication that the active top-level view is ChatGPT.
-2. Reliable provenance or product metadata establishing that an item belongs to Codex.
-
-Neither a local `cwd` nor a coding model name proves ownership. ChatGPT Work may use local folders. Names and titles are user-editable and must not be used as a product classifier.
-
-### Constraint from the reported local inspection
-
-The [inspection and review record](INSPECTION_SUMMARY_20260927.md) describes top-level modes, sidebar state, and project associations as distinct concepts. The native `All / Chat / Work` grouping maps `tpp` to an internal `codex` category; choosing `Chat` would exclude wanted Work content. The original report also distinguishes conversation filtering from project-row controls and search paths. Its four synthetic probe outcomes support a finding about native grouping, not ownership of real records. The complete anchor manifest and raw probe output are still pending independent review.
-
-Keep three distinct concepts separate:
-
-| Concept | Role in this feature | Evidence still needed |
-| --- | --- | --- |
-| Active top-level view | Determines whether the one-way filter should run | Verify agreement between top-level mode, sidebar surface state, and visible transitions; their naming schemes differ |
-| Native list category | Describes how existing app filters group records | Reproduce the reported grouping evidence if needed; a label or default classification of unknown values does not establish product ownership |
-| Product provenance and project association | Determines whether a record is wanted ChatGPT/Work content or unwanted Codex content | Review concrete fields, associations, missing values, and conflicting or mixed cases |
-
-Do not implement this feature by selecting native `Chat` or by hiding every internal `codex` item. The reported legitimate `tpp` Work case must remain visible. That case is a required regression example, not proof that every record labeled `tpp` has the same ownership. Project association is a candidate source of evidence, not a sufficient predicate until its semantics are reviewed.
-
-Before a prototype, write a documented decision table using the actual reviewed fields. It must distinguish confirmed wanted content, confirmed Codex content, and unknown/conflicting evidence. The two confirmed cases map to keep and hide respectively only while the verified ChatGPT view is active; outside it, preserve existing behavior. Unknown cases follow the inactive-filter behavior below. These behavior rules do not yet establish a field-level classifier.
-
-### Product behavior decided by report review
-
-This is the intended behavior to validate, not a claim that concrete provenance fields are already sufficient.
-
-| Condition | Required behavior |
+| Condition in the verified ChatGPT view | Required display behavior |
 | --- | --- |
-| Verified Codex view | Preserve the original rendering and caches |
-| Verified ChatGPT view; content independently confirmed as ChatGPT or ChatGPT Work | Preserve its existing eligible visibility, regardless of native grouping |
-| Verified ChatGPT view; content positively confirmed as Codex | Omit it from the derived display only |
-| Mixed project containing confirmed wanted children | Keep the project and wanted children; omit only positively classified Codex children |
-| Project positively established as wholly Codex, without wanted or unresolved content | May omit the project row under the same one-way display rule |
-| Missing/conflicting provenance, unsupported schema, or uncertain active view | Leave the original UI intact and report filtering as inactive |
+| Project explicitly marked show (Alice) | Preserve the project and its eligible conversations |
+| Project explicitly marked hide (Kelan) | Omit the project and its conversations from derived lists |
+| New/unclassified project | Native visibility; explicitly uncovered |
+| Confirmed projectless conversation | Native visibility; explicitly uncovered |
+| Missing, conflicting, stale or unresolved membership | Native visibility; explicitly unresolved/uncovered |
+| Codex view, disabled filter, unknown mode or incompatible build | Native interface; unknown/unsupported states report filtering inactive |
 
-"Preserve" does not mean unhide archived or hidden helper records. Apply this feature to entries eligible under the app's existing visibility rules, without overriding unrelated exclusions or user settings.
+Show/hide are display preferences, not changes to collaborator identity or claims
+of immutable product ownership. Show does not reintroduce archived, hidden, helper
+or otherwise natively excluded entries.
 
-All confirmed ChatGPT Work content must survive this filter. An internal coding label, a backend family, or absence of a ChatGPT project association cannot by itself establish Codex ownership. Validate positive provenance from independently known controlled cases; do not label test cases using the same classifier under review.
+## Project identity and initial list
 
-Project decisions require their own provenance and membership reasoning. An empty filtered page, an unloaded child list, or a page containing only Codex children cannot establish that an entire project is Codex-only. Mixed-project counts and ordering, if adjusted, must be derived without rewriting shared records. If the available metadata cannot support the required distinction, report the build as unsupported.
+Bind each rule to the app's unique project ID within its existing source/account/host
+scope. Equal labels or paths never merge projects. Respect remote host identity and
+the distinction between local and ChatGPT project IDs. Use an existing verified
+linked-project relation only when unambiguous; conflicting alias rules are unresolved.
 
-If the active view, ownership schema, or compatibility check is unknown, leave the original UI intact and visibly report that filtering is inactive. This preserves data and avoids silently hiding legitimate ChatGPT items; it also means the visibility requirement is not met in that state.
+The private proposed list contains one hide project and two uniquely identified show
+projects from the maintainer's selection. Two candidates sharing a supplied label
+remain unclassified until uniquely selected; this does not block other entries.
+Actual IDs stay private. No settings have been installed.
 
-## Candidate mechanisms
+A new project needs one classification. Rename preserves its ID rule; recreating a
+same-name project does not inherit it. A later discovered mixed project is removed
+from the classified list and treated as uncovered pending a separate supported rule.
 
-| Mechanism | Why investigate it | Unresolved constraints |
-| --- | --- | --- |
-| Runtime UI injection | A Windows community tool demonstrates loopback CDP injection into an app page without rewriting the official bundle | Current build must support the approach; mode and item metadata must be accessible; changes must survive rerenders and mode changes; late injection can expose unwanted rows briefly |
-| Patch a separate copy of the application | A Windows pagination patch demonstrates modifying copied webview assets while preserving the original install | Bundle signatures and packaging may differ; lifecycle and updates need checking; a copied app may use separate Electron user data; maintenance is version-specific |
+## Current membership contract
 
-These are research options, not installation instructions. Do not enable remote debugging on a network interface, disable security controls, replace the installed application, or modify user data merely to reproduce a reference project. Stop and document a constraint if the approach needs an unapproved change.
+Use native current membership, including explicit projectless state and live move
+overlays. A null catalog project ID is insufficient: the inspected conversation has
+an explicit assignment in separate native state. Cloud list records may carry
+`gizmo_id` or projected `projectId`.
 
-Prefer a filter at a verified list/render boundary over text matching or broad CSS. Apply it only in the ChatGPT view, and recompute when the view changes. Any shared cache must retain the original items so switching to Codex immediately restores its normal lists.
+Recent, pinned, project-child and search adapters must resolve the same logical
+conversation to the same current project. Use source/host plus conversation ID where
+required, never titles, snippets or `cwd`. Search can retain `(hostId, threadId)` while
+omitting membership. Join those IDs to current membership, or a verified metadata-only
+lookup if missing. Cache absence is unresolved, not proof of projectlessness. Do not
+fetch conversation bodies just to decide visibility.
 
-For paginated results, hiding one fetched page must not incorrectly report that the history is empty or exhausted. Search, recent items, pinned items, and project children may use different sources; inventory them before claiming completeness.
+Follow verified native membership precedence. A stale search page cannot override a
+newer association. Conflicting sources with no verified precedence remain uncovered.
+The filter must not write membership or source records; operate on derived lists.
 
-## Acceptance matrix
+## Moves and refresh
 
-Use synthetic project and conversation names for evidence.
+Show ↔ hide moves change visibility to the destination rule. Moving to an unclassified
+project or out of all projects returns to uncovered native visibility. Failed moves
+follow native rollback. No creation-history reconstruction is needed.
+
+Recompute on membership/rule/alias changes, mode transitions and refresh/reconnect.
+Existing search pages must recompute even when query text is unchanged. Respect native
+revision checks so late rollback cannot replace a newer move. Static inspection found
+membership broadcasts, cache updates and overlay/rollback helpers; isolated probes
+passed. That is not proof of live freshness or rendering order.
+
+## Surfaces and pagination
+
+| Surface | Required integration |
+| --- | --- |
+| Project rows, including pinned projects | Explicit project rule; no full child enumeration needed |
+| Expanded project lists | Current membership; stale parent container cannot win after a move |
+| Recent and pinned conversations | Stable identity joined to current membership/overlay |
+| Global, archived and composer search where conversations appear | Inventory each entry point; ID enrichment and re-evaluation of cached results |
+
+Every surface claimed as supported needs observed tests. Unresolved items make
+coverage incomplete. Keep native eligibility, shared caches and pagination cursors
+intact. A fully hidden fetched page does not prove exhausted history. Counts, shortcuts
+and alternate list branches need the same derived rule if they expose hidden entries.
+
+Unknown membership intentionally preserves native visibility. Therefore this feature
+does not guarantee hiding every conversation during loading or resolution failure.
+Measure first-paint flashes and stale decisions as coverage failures.
+
+## Candidate mechanism
+
+Prefer a common derived-list predicate and thin source adapters. Preserve original
+items for Codex mode and disabling. Native Chat selection, blanket internal `codex`
+exclusion, name matching and path-based classification are unsuitable. Wanted `tpp`
+entries inherit show exactly as ordinary chats do.
+
+Runtime UI injection and a separate copied-app patch remain [research options](RESEARCH.md).
+Choose only after confirming data access and reversibility. This design authorizes no
+security-control changes, installed-bundle replacement or public debug endpoint.
+
+## Acceptance
 
 | Case | Expected result |
 | --- | --- |
-| ChatGPT project and ordinary conversation | Remain visible and usable in ChatGPT |
-| ChatGPT Work project backed by a local folder | Remains visible; not misclassified by its folder |
-| Reported legitimate `tpp` Work conversation classified internally as `codex` | Remains visible in ChatGPT; native category alone must not trigger hiding |
-| Mixed project with wanted and confirmed Codex children | Project and wanted children remain; only confirmed Codex children are omitted |
-| Incomplete project pagination or absent ChatGPT association | Neither is accepted as proof of Codex-only ownership |
-| Existing archived/hidden helper exclusions | Remain in effect; preserving Work does not unhide unrelated entries |
-| Confirmed Codex project and conversation | Absent from relevant ChatGPT project and conversation lists |
-| Missing or conflicting provenance and project associations | Preserve original visibility and disclose inactive filtering; do not guess from an internal category |
-| Pinned, recent, search, and expanded project lists | Apply the same rule wherever that surface can return Codex content |
-| Pagination, newly created item, rerender, and restart | No persistent reappearance; legitimate ChatGPT results remain discoverable |
-| ChatGPT → Codex → ChatGPT | Codex rendering remains normal; the ChatGPT filter is reapplied correctly |
-| Slow startup or delayed metadata | No claim of complete filtering if Codex names flash before the filter runs |
-| Unknown mode, metadata, or unsupported build | Original UI preserved; filter explicitly reported as inactive |
-| Disable or remove the patch | Original interface returns; underlying records remain accessible |
+| Show project with ordinary and `tpp` children | All natively eligible entries preserved |
+| Hide project and children | Omitted on each supported ChatGPT surface |
+| Unclassified/new project and projectless chat | Native visibility; explicitly uncovered |
+| Null catalog ID with valid assignment | Use verified assignment, not projectless inference |
+| Equal labels/different IDs or equal thread IDs/different hosts | No cross-association |
+| Rename or new project reusing label | Rule survives rename; new ID unclassified |
+| Show ↔ hide move, move out, failed move, stale rollback | All surfaces follow current native membership and revision ordering |
+| Search without project fields or unloaded hit | Resolve by scoped ID, otherwise uncovered |
+| Pagination, rerender, reconnect, restart | No false exhaustion; current rule reapplied |
+| ChatGPT → Codex → ChatGPT; disable | Native Codex rendering preserved; one-way rule restored appropriately |
+| Existing hidden/helper/archive exclusions | No reintroduction of excluded entries |
+| Mixed project | Unsupported/unclassified; not a v1 prerequisite |
 
-Every surface claimed as supported needs an observed pass. A runtime prototype that briefly reveals Codex rows is a partial result, not full acceptance of "do not appear".
-
-## Verification and rollback
-
-Record the app version, operating system, patch commit, relevant asset identifiers, coverage, and rollback steps. Compare normal Codex behavior and representative record accessibility before and after applying the prototype. Check for unintended persistent writes by the patch; ordinary app activity can change files and should not be confused with patch mutations.
-
-For a runtime prototype, verify that disabling its launcher/injection and restarting restores normal rendering. For a copied-app prototype, retain the original installation and verify reopening it without the prototype. Do not publish a rollback command until its actual paths and effects have been tested.
-
-This is a visual convenience feature. It does not isolate storage, accounts, permissions, or model context, and it is not a privacy boundary between people sharing a device.
+Static probes do not replace UI acceptance. Record actual build, surfaces, refresh
+latency, flashes, failure behavior and verified removal before claiming a working
+filter. No histories, archive state, membership or shared records may be modified by
+the filter. It provides display convenience, not storage/account/security isolation.

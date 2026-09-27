@@ -4,9 +4,12 @@
 
 In the unified desktop app, Codex projects and conversations must not appear in the ChatGPT interface. The Codex interface already behaves as desired for the reported use case.
 
-The earlier idea of fully separating both histories has been narrowed to one-way interface visibility. The initial target is Windows. A local static inspection of app package `26.924.2738.0` was reported on 2026-09-27. Alice has read the two original reports privately; full anchor/probe reproduction and runtime verification remain pending.
+The earlier idea of fully separating both histories has been narrowed to one-way interface visibility. The initial target is Windows. A local static inspection of app package `26.924.2738.0` was reported on 2026-09-27. Alice has read the two original reports privately. Subsequent anchor/probe reproduction is complete; runtime verification remains pending.
 
-## Decisions — 2026-09-27
+## Historical decisions — 2026-09-27
+
+The provenance and mixed-project requirements below describe the earlier scope; the
+2026-09-28 decision supersedes them for v1.
 
 - Repository: [`scarlet-devil/chatgpt-codex-dialog-fillter`](https://github.com/scarlet-devil/chatgpt-codex-dialog-fillter), created and named by the maintainer.
 - The maintainer authorized a public repository, commits, and a Draft PR.
@@ -19,14 +22,30 @@ The earlier idea of fully separating both histories has been narrowed to one-way
 - Absence of a ChatGPT association is not positive Codex provenance. An incomplete page cannot prove that an entire project is Codex-only.
 - Keep machine-specific reports and evidence in the maintainer's private Drive channel. Public documentation contains necessary sanitized conclusions and progress only, with no private report links or raw local evidence.
 
-## Open questions
+## Current decision — 2026-09-28
 
-1. How do top-level mode and sidebar surface state propagate across visible views and transitions? Their different naming schemes are described in the report, but runtime agreement is unverified.
-2. Which combination of provenance and project associations distinguishes unwanted Codex content from wanted ChatGPT Work content, including the reported `tpp` case and mixed project containers?
-3. Can every relevant list and search surface be filtered before it becomes visible?
-4. Does the installed build support a reversible injection or copied-app workflow without weakening security controls?
+The maintainer narrowed v1 to an explicit project-ID visibility list. Alice/show
+projects preserve eligible entries; Kelan/hide projects and current members are
+omitted in ChatGPT only. New/unclassified projects and projectless or unresolved
+conversations retain native visibility and are explicitly uncovered. Moves follow
+current membership. Mixed projects are unsupported, not a prerequisite. Creation
+provenance and missing local Work examples no longer block this scope.
 
-See `docs/INSPECTION_SUMMARY_20260927.md` for the source and limits of the transferred findings, `docs/DESIGN.md` for acceptance criteria, and `WORK_LOG.md` for progress. This file records decisions, not a transcript of personal conversations.
+Private initialization proposes one hide and two uniquely identified show projects.
+Two same-label candidates remain unclassified. No app settings were installed.
+Ten new isolated native membership cases passed; scoped metadata reads demonstrate
+usable associations for selected examples, not universal lookup completeness.
+
+## Current open work
+
+1. Resolve current membership by scoped conversation ID on recent, pinned, expanded
+   lists and every search entry point, including unloaded hits.
+2. Verify broadcast/overlay updates invalidate derived decisions on cached pages;
+   measure moves, failures, hydration, first paint and mode transitions in the UI.
+3. Select and validate a reversible mechanism without weakening security controls.
+
+See [current design](docs/DESIGN.md), [new evidence](docs/PROJECT_VISIBILITY_VALIDATION.md)
+and [shared log](WORK_LOG.md). This records project decisions, not personal transcripts.
 
 ## Deferred follow-up — 2026-09-28
 
