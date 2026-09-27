@@ -27,3 +27,15 @@ The earlier idea of fully separating both histories has been narrowed to one-way
 4. Does the installed build support a reversible injection or copied-app workflow without weakening security controls?
 
 See `docs/INSPECTION_SUMMARY_20260927.md` for the source and limits of the transferred findings, `docs/DESIGN.md` for acceptance criteria, and `WORK_LOG.md` for progress. This file records decisions, not a transcript of personal conversations.
+
+## Deferred follow-up — 2026-09-28
+
+The maintainer asked to revisit local Work instructions and cloud-project context continuity after Kelan completes the dialogue filter. This is a deferred research direction, not part of the current filter implementation or an additional acceptance prerequisite.
+
+Questions to investigate later:
+
+- Which user custom instructions, project instructions, and local `AGENTS.md` guidance actually load in a local Work session, and how are overlapping instructions resolved?
+- Can that session access the intended ChatGPT project's files, memories, and shared work log, and how should it read the current authoritative materials?
+- How should cloud/local collaboration roles and instruction entry points remain consistent with the actual execution environment?
+
+Instruction inheritance and context availability in the maintainer's local Work sessions remain unverified. Do not assume that changing the work environment transfers all cloud instructions or memories. Resume this investigation after the filter is complete, following the maintainer's stated sequence.
