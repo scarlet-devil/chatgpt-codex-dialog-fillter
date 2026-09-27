@@ -4,7 +4,7 @@
 
 When the active product view is ChatGPT, omit records confirmed to belong to Codex from project and conversation lists. When the active view is Codex, preserve the original rendering behavior. Do not mutate the records or their persisted visibility, archive, membership, or deletion state.
 
-The words "active view" and "ownership" below describe concepts to investigate; they are not verified API fields. This draft deliberately does not invent selectors or record schema for an uninspected app build.
+The words "active view" and "ownership" below describe product concepts, not independently verified API fields. Build-specific findings are currently available only as a transferred local inspection summary; this draft does not invent selectors or record schemas from that summary.
 
 ## Classification
 
@@ -14,6 +14,22 @@ Both of these signals are required:
 2. Reliable provenance or product metadata establishing that an item belongs to Codex.
 
 Neither a local `cwd` nor a coding model name proves ownership. ChatGPT Work may use local folders. Names and titles are user-editable and must not be used as a product classifier.
+
+### Constraint from the reported local inspection
+
+The [transferred inspection summary](INSPECTION_SUMMARY_20260927.md) reports that app package `26.924.2738.0` has top-level `work/codex` modes and project association fields. It also reports that the native `All / Chat / Work` filter puts `tpp` conversations into an internal `codex` category, causing the `Chat` choice to exclude wanted Work content. The original anchors and sample inputs are still pending review.
+
+Keep three distinct concepts separate:
+
+| Concept | Role in this feature | Evidence still needed |
+| --- | --- | --- |
+| Active top-level view | Determines whether the one-way filter should run | Map the reported `work/codex` values to the visible views and verify transitions |
+| Native list category | Describes how existing app filters group records | Review how `tpp` enters the internal `codex` group; the label alone is not product ownership |
+| Product provenance and project association | Determines whether a record is wanted ChatGPT/Work content or unwanted Codex content | Review concrete fields, associations, missing values, and conflicting or mixed cases |
+
+Do not implement this feature by selecting native `Chat` or by hiding every internal `codex` item. The reported legitimate `tpp` Work case must remain visible. That case is a required regression example, not proof that every record labeled `tpp` has the same ownership. Project association is a candidate source of evidence, not a sufficient predicate until its semantics are reviewed.
+
+Before a prototype, write a documented decision table using the actual reviewed fields. It must distinguish confirmed wanted content, confirmed Codex content, and unknown/conflicting evidence. The two confirmed cases map to keep and hide respectively only while the verified ChatGPT view is active; outside it, preserve existing behavior. Unknown cases follow the inactive-filter behavior below. No field-level implementation is approved by this summary alone.
 
 For a project containing mixed or unknown-origin items, determine how the app represents membership before choosing a rule. Do not hide a ChatGPT project merely because one child looks like a Codex conversation. If the available metadata cannot support the required distinction, report that the build is unsupported.
 
@@ -40,7 +56,9 @@ Use synthetic project and conversation names for evidence.
 | --- | --- |
 | ChatGPT project and ordinary conversation | Remain visible and usable in ChatGPT |
 | ChatGPT Work project backed by a local folder | Remains visible; not misclassified by its folder |
+| Reported legitimate `tpp` Work conversation classified internally as `codex` | Remains visible in ChatGPT; native category alone must not trigger hiding |
 | Confirmed Codex project and conversation | Absent from relevant ChatGPT project and conversation lists |
+| Missing or conflicting provenance and project associations | Preserve original visibility and disclose inactive filtering; do not guess from an internal category |
 | Pinned, recent, search, and expanded project lists | Apply the same rule wherever that surface can return Codex content |
 | Pagination, newly created item, rerender, and restart | No persistent reappearance; legitimate ChatGPT results remain discoverable |
 | ChatGPT → Codex → ChatGPT | Codex rendering remains normal; the ChatGPT filter is reapplied correctly |

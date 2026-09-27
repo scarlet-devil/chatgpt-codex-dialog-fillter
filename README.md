@@ -15,14 +15,15 @@ This is an independent community experiment, not an official OpenAI product. A v
 - Leave the Codex view and stored histories unchanged.
 - Support disabling the filter and returning to the original interface.
 
-Project names, assistant nicknames, model names, and local folder paths are not sufficient evidence of product ownership.
+Project names, assistant nicknames, model names, and local folder paths are not sufficient evidence of product ownership. The reported native `Chat` filter and internal `codex` category are also insufficient: on the inspected build, they can exclude wanted `tpp` Work conversations.
 
 ## Start here
 
 - [Design and acceptance criteria](docs/DESIGN.md)
 - [Upstream issues and patch references](docs/RESEARCH.md)
 - [Local implementation handoff / 本地交接](docs/HANDOFF.md)
+- [Reported local inspection, 2026-09-27](docs/INSPECTION_SUMMARY_20260927.md)
 - [Project memory](PROJECT_MEMORY.md) and [work log](WORK_LOG.md)
 - [Contributor instructions](AGENTS.md)
 
-The next step is a read-only inspection of the current desktop app to identify reliable view and ownership metadata. Implementation depends on that evidence; this repository does not currently offer an installation command.
+Local static inspection of app package `26.924.2738.0` has been reported. The next step is to review its original evidence and revise the ownership criterion before building a prototype. The original reports have not yet been supplied to this repository; UI behavior, search coverage, and rollback remain unverified. This repository does not currently offer an installation command.
