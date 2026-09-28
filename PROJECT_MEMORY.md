@@ -36,6 +36,16 @@ Two same-label candidates remain unclassified. No app settings were installed.
 Ten new isolated native membership cases passed; scoped metadata reads demonstrate
 usable associations for selected examples, not universal lookup completeness.
 
+## Integration evidence — 2026-09-28
+
+After Alice's report-level review, Kelan traced the current membership integration
+paths and passed twenty offline native cases plus fifteen scoped metadata lookups.
+Pinned layout keys can be null despite membership; search dedup can preserve old
+row fields; separately keyed search caches need explicit recomputation. Membership
+save failure rolls back, while later sidebar persistence failure does not undo a
+successful membership save. These are static/offline findings, not UI acceptance.
+See [integration boundaries](docs/MEMBERSHIP_INTEGRATION.md).
+
 ## Current open work
 
 1. Resolve current membership by scoped conversation ID on recent, pinned, expanded

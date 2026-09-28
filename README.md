@@ -19,6 +19,7 @@ not determine the rule; wanted `tpp` Work remains eligible in show projects.
 
 - [Current design and acceptance](docs/DESIGN.md)
 - [Project membership validation](docs/PROJECT_VISIBILITY_VALIDATION.md)
+- [Current-project integration verification](docs/MEMBERSHIP_INTEGRATION.md)
 - [Local handoff / 本地交接](docs/HANDOFF.md)
 - [Earlier general ownership investigation](docs/OWNERSHIP_VALIDATION.md)
 - [Original report review](docs/INSPECTION_SUMMARY_20260927.md)
