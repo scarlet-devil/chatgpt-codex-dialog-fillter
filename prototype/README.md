@@ -134,3 +134,11 @@ record which surfaces are wired and which remain uncovered. The current instruct
 authorizes prototype preparation and the existing Draft update, not installation or
 activation in the user's desktop app. Actual runtime acceptance follows that concrete
 candidate. No real conversations need to be moved to prepare this deliverable.
+
+## Local acceptance update — 2026-09-28
+
+Kelan replayed all 27 tests and exercised the unchanged synthetic demo in a real
+browser: 20 sequential checkpoints, 73 assertions, all passed. See the
+[ordered acceptance record](../docs/PROTOTYPE_ACCEPTANCE.md) for reproduction and
+precise coverage. This supersedes the earlier browser-unavailable limitation for
+the demo only; native desktop integration and UI acceptance remain pending.

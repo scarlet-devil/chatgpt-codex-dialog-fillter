@@ -54,7 +54,17 @@ replay packet at report/artifact level; she did not independently run native app
 functions. An original, default-off [prototype core and synthetic demo](prototype/README.md)
 are now prepared, with 27 passing cloud Node tests. The core does not connect to the
 desktop app. No app patch, real membership change or settings installation occurred.
-The demo has not had browser acceptance. This contribution remains `review_pending`.
+At preparation time the demo had not had browser acceptance. This contribution
+remains `review_pending`.
+
+## Local prototype acceptance — 2026-09-28
+
+Kelan tested input `0d3f3cee6716a95cb95777cb238dd8596b9e8a55`: 27 original core
+tests passed locally, and 20 sequential synthetic-browser checkpoints passed 73
+expected/observed assertions. The core and demo were unchanged. The private packet
+retains raw outputs, screenshots and hashes; see [acceptance](docs/PROTOTYPE_ACCEPTANCE.md).
+This accepts the core/demo scope only. Native adapters, actual refresh/first paint,
+pagination and desktop removal remain pending. No installation or activation occurred.
 
 ## Current open work
 

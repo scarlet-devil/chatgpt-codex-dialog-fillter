@@ -19,6 +19,7 @@ not determine the rule; wanted `tpp` Work remains eligible in show projects.
 ## Start here
 
 - [Run the prototype and read the adapter contract](prototype/README.md)
+- [Traceable core and synthetic-browser acceptance](docs/PROTOTYPE_ACCEPTANCE.md)
 - [Current design and acceptance](docs/DESIGN.md)
 - [Project membership validation](docs/PROJECT_VISIBILITY_VALIDATION.md)
 - [Current-project integration verification](docs/MEMBERSHIP_INTEGRATION.md)
@@ -31,7 +32,8 @@ not determine the rule; wanted `tpp` Work remains eligible in show projects.
 The original prototype core passes 27 synthetic Node tests. Earlier local native
 probes and scoped metadata reads support the adapter design. Recent, pinned, expanded
 lists and search still require real desktop integration and live freshness verification.
-The synthetic demo has not had browser acceptance; no installer is provided.
+Local acceptance passed the 27 core tests and 20 synthetic-browser checkpoints
+(73 assertions). Native desktop acceptance is still pending; no installer is provided.
 A preserved ID in search is a lookup key, not proof of complete coverage.
 
 This independent community experiment provides no account/storage/security isolation.
