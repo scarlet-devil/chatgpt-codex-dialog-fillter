@@ -1,0 +1,9 @@
+{
+  "name": "chatgpt-codex-dialog-fillter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test prototype/visibility-filter.test.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>项目过滤 · 合成数据演示</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.6 system-ui, sans-serif; color: #182238; background: #f3f5fa; }
+    * { box-sizing: border-box; }
+    body { max-width: 1120px; margin: auto; padding: 32px 24px 60px; }
+    h1 { margin: 4px 0 8px; font-size: 30px; letter-spacing: -.7px; }
+    h2 { margin: 0; font-size: 18px; }
+    p { margin: 8px 0; }
+    .muted { color: #526078; }
+    .badge { font-size: 12px; color: #414daf; font-weight: 700; letter-spacing: 1px; }
+    .controls, .card, .experiments { background: white; border: 1px solid #dde3ee; border-radius: 14px; padding: 20px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin: 24px 0 12px; }
+    label { display: inline-flex; align-items: center; gap: 9px; }
+    input[type=checkbox] { width: 18px; height: 18px; accent-color: #4656b9; }
+    select, button, input[type=search] { font: inherit; border: 1px solid #bfc9dc; background: white; border-radius: 7px; padding: 6px 10px; color: inherit; }
+    button { cursor: pointer; }
+    button:hover { background: #eef1fa; }
+    :focus-visible { outline: 3px solid #94a6ff; outline-offset: 2px; }
+    #state { min-height: 28px; color: #364581; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .card header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+    .stats { font-size: 13px; color: #62708a; }
+    ul { padding: 0; margin: 14px 0 0; list-style: none; }
+    li { padding: 9px 0; border-top: 1px solid #edf0f5; }
+    .empty { color: #708099; font-style: italic; }
+    .experiments { margin-top: 22px; }
+    .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    #log { font-size: 14px; color: #455572; }
+    #search { width: 150px; }
+    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } body { padding: 20px 14px; } }
+  </style>
+</head>
+<body>
+  <div class="badge">可撤销原型 / 合成数据</div>
+  <h1>同一份记录，不同的显示结果</h1>
+  <p class="muted">这里使用虚构项目和对话，不连接桌面应用。启用后隐藏“示例工程”及其当前成员；原始记录始终保留。</p>
+  <div class="controls">
+    <label><input id="enabled" type="checkbox">启用过滤</label>
+    <label>当前界面 <select id="mode"><option value="chatgpt">ChatGPT</option><option value="codex">Codex</option></select></label>
+    <button id="reset" type="button">重置演示</button>
+    <button id="dispose" type="button">移除原型</button>
+  </div>
+  <p id="state" role="status" aria-live="polite"></p>
+  <div class="grid">
+    <section class="card"><header><h2>项目</h2><span class="stats" id="projects-stats"></span></header><ul id="projects"></ul></section>
+    <section class="card"><header><h2>最近对话</h2><span class="stats" id="recent-stats"></span></header><ul id="recent"></ul></section>
+    <section class="card"><header><h2>置顶对话</h2><span class="stats" id="pinned-stats"></span></header><ul id="pinned"></ul></section>
+    <section class="card"><header><h2>缓存搜索结果</h2><label><span class="muted">搜索</span><input id="search" type="search" aria-label="筛选合成搜索结果"></label></header><span class="stats" id="search-results-stats"></span><ul id="search-results"></ul></section>
+  </div>
+  <section class="experiments">
+    <h2>观察当前关联的变化</h2>
+    <p class="muted">“工程讨论”原属隐藏项目。下面只改变合成的成员状态，搜索文字和原始列表保持不变。</p>
+    <div class="buttons">
+      <button id="move-show" type="button">移到显示项目</button>
+      <button id="move-hide" type="button">移到隐藏项目</button>
+      <button id="move-free" type="button">移出所有项目</button>
+      <button id="membership-failure" type="button">模拟成员保存失败</button>
+      <button id="sidebar-failure" type="button">模拟侧栏保存失败</button>
+      <button id="late-response" type="button">模拟旧查询迟到</button>
+    </div>
+    <p id="log" role="status" aria-live="polite">过滤默认关闭。未知归属会保留显示，并计入未覆盖项。</p>
+  </section>
+  <script type="module" src="./demo.mjs"></script>
+</body>
+</html>

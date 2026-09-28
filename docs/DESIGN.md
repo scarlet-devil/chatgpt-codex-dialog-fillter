@@ -9,7 +9,8 @@ category, model and original project do not decide visibility.
 This supersedes the earlier general product-provenance classifier. The maintainer
 reports no mixed projects in the present use case. Mixed projects are unsupported
 in v1; missing mixed-project or local Work examples no longer block this scope.
-No application filter or installer exists yet.
+A default-off [prototype core and synthetic demo](../prototype/README.md) now exist.
+No application-connected filter or installer exists yet.
 
 | Condition in the verified ChatGPT view | Required display behavior |
 | --- | --- |
@@ -94,6 +95,10 @@ Prefer a common derived-list predicate and thin source adapters. Preserve origin
 items for Codex mode and disabling. Native Chat selection, blanket internal `codex`
 exclusion, name matching and path-based classification are unsuitable. Wanted `tpp`
 entries inherit show exactly as ordinary chats do.
+
+The prepared core implements this derived-list contract with scoped identities,
+current membership snapshots, explicit invalidation and guarded asynchronous lookup.
+Its synthetic tests do not establish native adapter correctness or live UI behavior.
 
 Runtime UI injection and a separate copied-app patch remain [research options](RESEARCH.md).
 Choose only after confirming data access and reversibility. This design authorizes no

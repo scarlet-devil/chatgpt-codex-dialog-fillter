@@ -46,13 +46,25 @@ save failure rolls back, while later sidebar persistence failure does not undo a
 successful membership save. These are static/offline findings, not UI acceptance.
 See [integration boundaries](docs/MEMBERSHIP_INTEGRATION.md).
 
+## Prototype preparation — 2026-09-28
+
+The maintainer authorized starting preparation after the integration evidence review.
+Alice reviewed input `59a654a89a7f636e39ec4c155526eef0f91d296b` and the private
+replay packet at report/artifact level; she did not independently run native app
+functions. An original, default-off [prototype core and synthetic demo](prototype/README.md)
+are now prepared, with 27 passing cloud Node tests. The core does not connect to the
+desktop app. No app patch, real membership change or settings installation occurred.
+The demo has not had browser acceptance. This contribution remains `review_pending`.
+
 ## Current open work
 
-1. Resolve current membership by scoped conversation ID on recent, pinned, expanded
-   lists and every search entry point, including unloaded hits.
-2. Verify broadcast/overlay updates invalidate derived decisions on cached pages;
-   measure moves, failures, hydration, first paint and mode transitions in the UI.
-3. Select and validate a reversible mechanism without weakening security controls.
+1. Kelan prepares thin desktop adapters and a reviewable reversible candidate using
+   the core contract; keep defaults off and unknown remote lookup uncovered.
+2. Bind current membership by scoped ID and subscribe every supported list/search
+   surface, preserving native eligibility, source rows and pagination controls.
+3. After a concrete candidate is reviewed and runtime use is authorized, verify
+   live moves/failures, cached searches, hydration, first paint, mode transitions,
+   disabling and removal. Preparation does not authorize desktop installation.
 
 See [current design](docs/DESIGN.md), [new evidence](docs/PROJECT_VISIBILITY_VALIDATION.md)
 and [shared log](WORK_LOG.md). This records project decisions, not personal transcripts.

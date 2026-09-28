@@ -2,7 +2,8 @@
 
 Apply a maintainer-specified project visibility list to the ChatGPT interface.
 
-**Status: v1 design and local static evidence. No working filter or installer yet.**
+**Status: default-off prototype core and synthetic demo prepared; desktop integration
+and runtime acceptance are pending. No application filter is installed.**
 
 The first target is Windows. V1 binds show/hide preferences to unique project IDs.
 Conversations follow their current project, including after a move. Alice/show
@@ -17,6 +18,7 @@ not determine the rule; wanted `tpp` Work remains eligible in show projects.
 
 ## Start here
 
+- [Run the prototype and read the adapter contract](prototype/README.md)
 - [Current design and acceptance](docs/DESIGN.md)
 - [Project membership validation](docs/PROJECT_VISIBILITY_VALIDATION.md)
 - [Current-project integration verification](docs/MEMBERSHIP_INTEGRATION.md)
@@ -26,10 +28,11 @@ not determine the rule; wanted `tpp` Work remains eligible in show projects.
 - [Upstream references](docs/RESEARCH.md)
 - [Project decisions](PROJECT_MEMORY.md), [work log](WORK_LOG.md), [instructions](AGENTS.md)
 
-Prior static anchors and native grouping probes were reproduced. New membership
-probes and scoped metadata reads support investigating current-project filtering.
-Recent, pinned, expanded lists and search still require integration and live freshness
-verification. A preserved ID in search is a lookup key, not proof of complete coverage.
+The original prototype core passes 27 synthetic Node tests. Earlier local native
+probes and scoped metadata reads support the adapter design. Recent, pinned, expanded
+lists and search still require real desktop integration and live freshness verification.
+The synthetic demo has not had browser acceptance; no installer is provided.
+A preserved ID in search is a lookup key, not proof of complete coverage.
 
 This independent community experiment provides no account/storage/security isolation.
 Private evidence stays in the maintainer's managed Drive channel. Public files contain
